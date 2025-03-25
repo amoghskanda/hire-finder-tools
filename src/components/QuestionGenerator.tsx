@@ -1,12 +1,13 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
-import { FileQuestion, Copy, Check, Sparkles } from "lucide-react";
+import { FileQuestion, Copy, Check, Sparkles, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { InterviewQuestion, Resume } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import AnimatedTransition from "./AnimatedTransition";
 
 const QuestionGenerator = () => {
   const [jobDescription, setJobDescription] = useState("");
@@ -14,6 +15,7 @@ const QuestionGenerator = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [questions, setQuestions] = useState<InterviewQuestion[]>([]);
   const [copied, setCopied] = useState<Record<string, boolean>>({});
+  const [savedToFile, setSavedToFile] = useState(false);
   
   // Mock data - in a real app, this would come from an API
   const resumes: Resume[] = [
@@ -35,6 +37,7 @@ const QuestionGenerator = () => {
 
     setIsGenerating(true);
     setQuestions([]);
+    setSavedToFile(false);
 
     // Simulate API call delay
     await new Promise(resolve => setTimeout(resolve, 3000));
@@ -90,6 +93,75 @@ const QuestionGenerator = () => {
     navigator.clipboard.writeText(allQuestions).then(() => {
       toast.success("All questions copied to clipboard");
     });
+  };
+
+  const saveQuestionsToFile = async () => {
+    try {
+      // Create a JSON string from the questions
+      const questionsJson = JSON.stringify(questions, null, 2);
+      
+      // Create a Blob
+      const blob = new Blob([questionsJson], { type: "application/json" });
+      
+      // Try to use the File System Access API if available
+      if ('showSaveFilePicker' in window) {
+        try {
+          const selectedResume = resumes.find(r => r.id === selectedResumeId);
+          const resumeName = selectedResume ? selectedResume.filename.split('.')[0] : 'questions';
+          const filename = `${resumeName}_questions_${new Date().toISOString().split('T')[0]}.json`;
+          
+          // @ts-ignore - TypeScript might not recognize this API yet
+          const fileHandle = await window.showSaveFilePicker({
+            suggestedName: filename,
+            types: [{
+              description: 'JSON Files',
+              accept: { 'application/json': ['.json'] }
+            }]
+          });
+          
+          const writable = await fileHandle.createWritable();
+          await writable.write(blob);
+          await writable.close();
+          
+          toast.success("Questions saved to file");
+          setSavedToFile(true);
+        } catch (err) {
+          // User might have canceled the file picker
+          console.error("Error saving file:", err);
+          // Fallback to download if the user cancelled or there was an error
+          downloadFile(blob);
+        }
+      } else {
+        // Fallback for browsers that don't support the File System Access API
+        downloadFile(blob);
+      }
+    } catch (error) {
+      console.error("Error saving questions to file:", error);
+      toast.error("Failed to save questions to file");
+    }
+  };
+  
+  const downloadFile = (blob: Blob) => {
+    // Create a download link
+    const selectedResume = resumes.find(r => r.id === selectedResumeId);
+    const resumeName = selectedResume ? selectedResume.filename.split('.')[0] : 'questions';
+    const filename = `${resumeName}_questions_${new Date().toISOString().split('T')[0]}.json`;
+    
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    
+    // Clean up
+    setTimeout(() => {
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }, 0);
+    
+    toast.success("Questions downloaded as file");
+    setSavedToFile(true);
   };
 
   return (
@@ -172,19 +244,31 @@ const QuestionGenerator = () => {
       </div>
 
       {(questions.length > 0 || isGenerating) && (
-        <div className="glass-card p-6">
+        <AnimatedTransition show={questions.length > 0 || isGenerating} className="mb-6">
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-lg font-semibold">Interview Questions</h3>
             {questions.length > 0 && (
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={copyAllToClipboard}
-                className="gap-1.5"
-              >
-                <Copy size={14} />
-                Copy All
-              </Button>
+              <div className="flex gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={copyAllToClipboard}
+                  className="gap-1.5"
+                >
+                  <Copy size={14} />
+                  Copy All
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={saveQuestionsToFile}
+                  disabled={savedToFile}
+                  className={cn("gap-1.5", savedToFile && "text-green-600 border-green-600")}
+                >
+                  <Download size={14} />
+                  {savedToFile ? "Saved" : "Save as File"}
+                </Button>
+              </div>
             )}
           </div>
           
@@ -236,7 +320,7 @@ const QuestionGenerator = () => {
               ))}
             </div>
           ) : null}
-        </div>
+        </AnimatedTransition>
       )}
     </div>
   );
