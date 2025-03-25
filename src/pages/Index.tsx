@@ -7,7 +7,8 @@ import {
   RefreshCw, 
   Database, 
   Search, 
-  FileQuestion 
+  FileQuestion,
+  Building2
 } from "lucide-react";
 import ResumeUpload from "@/components/ResumeUpload";
 import ResumeProcessor from "@/components/ResumeProcessor";
@@ -24,21 +25,29 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
-      <div className="max-w-screen-xl mx-auto px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-        <div className="text-center mb-12 animate-fade-in">
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl md:text-5xl">
-            Resume Matching System
+    <div className="min-h-screen bg-gradient-to-b from-cream-light via-white to-cream">
+      <div className="max-w-screen-xl mx-auto px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+        {/* Header Section */}
+        <div className="text-center mb-16 animate-fade-in">
+          <div className="inline-flex items-center justify-center p-2 bg-royal/10 rounded-full mb-4">
+            <Building2 className="h-6 w-6 text-royal mr-2" />
+            <span className="text-royal font-medium">Talent Acquisition Suite</span>
+          </div>
+          <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl md:text-6xl mb-4">
+            <span className="text-royal">Resume</span> <span className="text-burgundy">Matching</span> <span className="text-gray-900">System</span>
           </h1>
-          <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="mt-4 text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
             Upload resumes, process them, and find the perfect match for your job descriptions
           </p>
+          <div className="mt-8 h-1 w-20 bg-gradient-to-r from-royal via-burgundy to-cream-dark mx-auto rounded-full"></div>
         </div>
 
-        <div className="mb-8">
-          <IndexChecker className="max-w-3xl mx-auto" />
+        {/* Index Checker Section */}
+        <div className="mb-12">
+          <IndexChecker className="max-w-3xl mx-auto corporate-panel" />
         </div>
 
+        {/* Tabs Section */}
         <Tabs 
           defaultValue="upload" 
           value={activeTab} 
@@ -46,20 +55,32 @@ const Index = () => {
           className="w-full"
         >
           <div className="flex justify-center mb-8">
-            <TabsList className="grid grid-cols-5 w-full max-w-3xl">
-              <TabsTrigger value="upload" className="flex items-center gap-1.5">
+            <TabsList className="grid grid-cols-5 w-full max-w-3xl bg-white shadow-corporate border border-gray-100 p-1.5">
+              <TabsTrigger 
+                value="upload" 
+                className="flex items-center gap-1.5 data-[state=active]:bg-royal data-[state=active]:text-white"
+              >
                 <Upload size={16} />
                 <span className="hidden sm:inline">Upload</span>
               </TabsTrigger>
-              <TabsTrigger value="process" className="flex items-center gap-1.5">
+              <TabsTrigger 
+                value="process" 
+                className="flex items-center gap-1.5 data-[state=active]:bg-royal data-[state=active]:text-white"
+              >
                 <RefreshCw size={16} />
                 <span className="hidden sm:inline">Process</span>
               </TabsTrigger>
-              <TabsTrigger value="match" className="flex items-center gap-1.5">
+              <TabsTrigger 
+                value="match" 
+                className="flex items-center gap-1.5 data-[state=active]:bg-royal data-[state=active]:text-white"
+              >
                 <Search size={16} />
                 <span className="hidden sm:inline">Match</span>
               </TabsTrigger>
-              <TabsTrigger value="questions" className="flex items-center gap-1.5">
+              <TabsTrigger 
+                value="questions" 
+                className="flex items-center gap-1.5 data-[state=active]:bg-royal data-[state=active]:text-white"
+              >
                 <FileQuestion size={16} />
                 <span className="hidden sm:inline">Questions</span>
               </TabsTrigger>
@@ -114,6 +135,11 @@ const Index = () => {
             </AnimatedTransition>
           </TabsContent>
         </Tabs>
+        
+        {/* Footer */}
+        <div className="mt-24 text-center text-gray-500 text-sm">
+          <p>© 2023 Resume Matching System | Talent Acquisition Suite</p>
+        </div>
       </div>
     </div>
   );

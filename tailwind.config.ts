@@ -63,10 +63,28 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-        success: {
-          DEFAULT: "#34C759",
-          foreground: "#FFFFFF"
-        },
+                success: {
+                  DEFAULT: "#34C759",
+                  foreground: "#FFFFFF"
+                },
+                royal: {
+                  DEFAULT: "#1F3A93",
+                  light: "#3A539B",
+                  dark: "#1A2D72",
+                  foreground: "#FFFFFF"
+                },
+                burgundy: {
+                  DEFAULT: "#5D1A33",
+                  light: "#7E2447",
+                  dark: "#4A1429",
+                  foreground: "#FFFFFF"
+                },
+                cream: {
+                  DEFAULT: "#F8F4E3",
+                  light: "#FFFDF5",
+                  dark: "#E8E4D3",
+                  foreground: "#1A1A1A"
+                },
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -141,7 +159,15 @@ export default {
 				'scale-in': 'scale-in 0.2s ease-out',
 				'scale-out': 'scale-out 0.2s ease-out',
 				'slide-in': 'slide-in 0.3s ease-out',
-			}
+			},
+            fontFamily: {
+                sans: ['Inter', 'sans-serif'],
+                serif: ['Georgia', 'serif'],
+            },
+            boxShadow: {
+                'corporate': '0 4px 14px 0 rgba(0, 0, 0, 0.1)',
+                'corporate-lg': '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
+            },
 		}
 	},
 	plugins: [require("tailwindcss-animate")],

@@ -1,7 +1,6 @@
-
 import { useState } from "react";
 import { toast } from "sonner";
-import { FileText, RefreshCw } from "lucide-react";
+import { FileText, RefreshCw, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Resume } from "@/lib/types";
 import { cn } from "@/lib/utils";
