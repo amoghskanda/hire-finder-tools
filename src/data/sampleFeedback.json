@@ -1,0 +1,59 @@
+
+[
+  {
+    "id": "fb1",
+    "candidateName": "John Smith",
+    "resumeId": "res123",
+    "jobTitle": "Senior Frontend Developer",
+    "interviewDate": "2023-06-15",
+    "overallRating": 4.5,
+    "strengths": [
+      "Strong React knowledge",
+      "Excellent problem-solving abilities",
+      "Good communication skills"
+    ],
+    "areasOfImprovement": [
+      "Limited backend experience",
+      "Could improve on system design knowledge"
+    ],
+    "feedback": "John demonstrated exceptional frontend skills during the interview. His React knowledge is advanced and he was able to solve complex UI challenges efficiently. While he lacks some backend experience, his willingness to learn and strong fundamentals make him a good candidate.",
+    "recommendation": "hire"
+  },
+  {
+    "id": "fb2",
+    "candidateName": "Jane Doe",
+    "resumeId": "res456",
+    "jobTitle": "Full Stack Engineer",
+    "interviewDate": "2023-06-18",
+    "overallRating": 3.8,
+    "strengths": [
+      "Versatile skill set",
+      "Good knowledge of both frontend and backend",
+      "Experience with microservices"
+    ],
+    "areasOfImprovement": [
+      "Testing practices could be improved",
+      "Limited experience with CI/CD"
+    ],
+    "feedback": "Jane has a well-rounded skill set covering both frontend and backend technologies. She demonstrated good understanding of system architecture and microservices. Her testing methodology needs improvement, but overall she has the technical skills required for the position.",
+    "recommendation": "consider"
+  },
+  {
+    "id": "fb3",
+    "candidateName": "Robert Johnson",
+    "resumeId": "res789",
+    "jobTitle": "DevOps Engineer",
+    "interviewDate": "2023-06-20",
+    "overallRating": 4.9,
+    "strengths": [
+      "Expert in cloud infrastructure",
+      "Strong automation skills",
+      "Excellent knowledge of Kubernetes and Docker"
+    ],
+    "areasOfImprovement": [
+      "Could improve frontend development knowledge"
+    ],
+    "feedback": "Robert is an outstanding DevOps engineer with deep expertise in cloud technologies and automation. His knowledge of containerization and orchestration is exceptional. While he's not as strong on the frontend, this isn't critical for the role he's applying for.",
+    "recommendation": "hire"
+  }
+]

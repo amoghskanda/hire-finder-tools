@@ -8,13 +8,15 @@ import {
   Database, 
   Search, 
   FileQuestion,
-  Building2
+  Building2,
+  MessageSquareText
 } from "lucide-react";
 import ResumeUpload from "@/components/ResumeUpload";
 import ResumeProcessor from "@/components/ResumeProcessor";
 import IndexChecker from "@/components/IndexChecker";
 import ResumeMatcher from "@/components/ResumeMatcher";
 import QuestionGenerator from "@/components/QuestionGenerator";
+import Feedback from "@/components/Feedback";
 import AnimatedTransition from "@/components/AnimatedTransition";
 
 const Index = () => {
@@ -55,7 +57,7 @@ const Index = () => {
           className="w-full"
         >
           <div className="flex justify-center mb-8">
-            <TabsList className="grid grid-cols-5 w-full max-w-3xl bg-white shadow-corporate border border-gray-100 p-1.5">
+            <TabsList className="grid grid-cols-6 w-full max-w-3xl bg-white shadow-corporate border border-gray-100 p-1.5">
               <TabsTrigger 
                 value="upload" 
                 className="flex items-center gap-1.5 data-[state=active]:bg-royal data-[state=active]:text-white"
@@ -83,6 +85,13 @@ const Index = () => {
               >
                 <FileQuestion size={16} />
                 <span className="hidden sm:inline">Questions</span>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="feedback" 
+                className="flex items-center gap-1.5 data-[state=active]:bg-royal data-[state=active]:text-white"
+              >
+                <MessageSquareText size={16} />
+                <span className="hidden sm:inline">Feedback</span>
               </TabsTrigger>
             </TabsList>
           </div>
@@ -132,6 +141,18 @@ const Index = () => {
           >
             <AnimatedTransition show={activeTab === "questions"}>
               <QuestionGenerator />
+            </AnimatedTransition>
+          </TabsContent>
+          
+          <TabsContent 
+            value="feedback" 
+            className={cn(
+              "w-full",
+              activeTab === "feedback" ? "animate-scale-in" : "hidden"
+            )}
+          >
+            <AnimatedTransition show={activeTab === "feedback"}>
+              <Feedback />
             </AnimatedTransition>
           </TabsContent>
         </Tabs>
